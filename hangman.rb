@@ -6,8 +6,13 @@ class Game
         @word = selectWord
         @array = []
         (@word.length).times {@array << "_"}
+        startGame
+    end
+
+    def startGame
         until @status || @turns == 0
             guess(@word)
+            @turns -= 1
         end
     end
 
@@ -30,8 +35,6 @@ class Game
         end
         
         updateArray(guess)
-
-        @turns -= 1
 
     end
 
