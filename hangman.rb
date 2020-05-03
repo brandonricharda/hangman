@@ -4,6 +4,7 @@ class Game
         @status = false
         @turns = 10
         @word = selectWord
+        puts @word
         @array = []
         (@word.length).times {@array << "_"}
         startGame
@@ -14,6 +15,10 @@ class Game
             guess(@word)
             @turns -= 1
         end
+
+        message = @status ? "You won!" : "You're out of turns! The word was #{@word}."
+        puts message
+
     end
 
     def selectWord
@@ -44,6 +49,7 @@ class Game
                 @array[index] = letter
             end
         end
+        @status = @array == @word
     end
 
 end
