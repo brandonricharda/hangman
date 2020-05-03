@@ -1,13 +1,48 @@
-def startGame
-
-end
-
-def selectWord
-    chosen_word = ""
-    until chosen_word.length == 7 || chosen_word.length == 14
-        chosen_word = File.readlines("5desk.txt").sample
+class Game
+    
+    def initialize
+        @status = false
+        @turns = 10
+        @word = selectWord
+        @array = []
+        (@word.length).times {@array << "_"}
+        until @status || @turns == 0
+            guess(@word)
+        end
     end
-    puts chosen_word
+
+    def selectWord
+        chosen_word = []
+        until chosen_word.length >=5 && chosen_word.length <= 12
+            chosen_word = File.readlines("5desk.txt").sample.chomp.split("").map(&:upcase)
+        end
+        chosen_word
+    end
+
+    def guess(phrase)
+
+        puts "Guess a letter! Current progress: #{@array.join("")} \nRemaining Turns: #{@turns}"
+        guess = gets.chomp.upcase
+        
+        until guess.length == 1 && guess =~ /^[a-zA-z]+$/
+            puts "Please enter a single letter (case insensitive)."
+            guess = gets.chomp.upcase
+        end
+        
+        updateArray(guess)
+
+        @turns -= 1
+
+    end
+
+    def updateArray(letter)
+        @word.each_with_index do |item, index|
+            if item == letter
+                @array[index] = letter
+            end
+        end
+    end
+
 end
 
-10.times {selectWord}
+hangman = Game.new
