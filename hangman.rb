@@ -1,9 +1,6 @@
 require 'yaml'
 
 class Game
-
-    #Maybe we can look at setting parameters for Initialize that default to the starting values if nothing is input and the actual save game values if something is input.
-    #Or perhaps the serialization process will take care of that altogether... find out tomorrow!
     
     def initialize
         @status = false
@@ -11,6 +8,7 @@ class Game
         @word = selectWord
         @array = []
         @current_file = ""
+        @data = []
         (@word.length).times {@array << "_"}
         if !Dir.exist?("saved_games")
             Dir.mkdir("saved_games")
@@ -29,7 +27,6 @@ class Game
             end
             @turns -= 1
         end
-
         message = @status ? "You won!" : "You're out of turns! The word was #{@word.join("")}."
         puts message
 
@@ -51,10 +48,7 @@ class Game
     end
 
     def save(name)
-        file = File.open("saved_games/#{name}", "w")
-        data = YAML::dump(self)
-        file.puts data
-        file.close
+        file = File.open("saved_games/#{name}.yml", "w") { |file| file.write(self.to_yaml) }
         @current_file = name
         puts "File updated."
     end
@@ -92,5 +86,3 @@ class Game
     end
 
 end
-
-hangman = Game.new
