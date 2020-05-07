@@ -11,8 +11,8 @@ def initiate
         elsif response == "Y"
             raw_file_names = Dir["saved_games/**/*.yml"]
             cleansed_names = []
-            raw_file_names.each { |item| cleansed_names << item.split("/")[1] }
-            puts "Which game would you like to load? (Don't type the extension)."
+            raw_file_names.each { |item| cleansed_names << item.split("/")[1].split(".")[0] }
+            puts "Which game would you like to load?"
             puts cleansed_names
             selected_game = gets.chomp + ".yml"
             until File.exist?("saved_games/#{selected_game}")

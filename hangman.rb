@@ -50,7 +50,7 @@ class Game
     def save(name)
         file = File.open("saved_games/#{name}.yml", "w") { |file| file.write(self.to_yaml) }
         @current_file = name
-        puts "File updated."
+        puts "File updated." unless @turns % 5 != 0
     end
 
     def selectWord
