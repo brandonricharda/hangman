@@ -27,6 +27,7 @@ class Game
             end
             @turns -= 1
         end
+        save(@current_file)
         message = @status ? "You won!" : "You're out of turns! The word was #{@word.join("")}."
         puts message
 
